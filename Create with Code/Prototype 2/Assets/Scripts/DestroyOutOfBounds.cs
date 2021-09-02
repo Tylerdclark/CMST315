@@ -19,5 +19,9 @@ public class DestroyOutOfBounds : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        else
+        {
+            Debug.Log("Game Over");
+        }
     }
 }
