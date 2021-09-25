@@ -19,9 +19,13 @@ public class ScrollingBackground : MonoBehaviour
         var meshRenderer = GetComponent<MeshRenderer>();
         var mat = meshRenderer.material;
 
-        Vector2 offset = mat.mainTextureOffset;
-        offset.x = player.transform.position.x / player.transform.localScale.x /parallax;
-        offset.y = player.transform.position.y / player.transform.localScale.y /parallax;
+        var offset = mat.mainTextureOffset;
+        var transform1 = player.transform;
+        var position = transform1.position;
+        var localScale = transform1.localScale;
+        
+        offset.x = position.x / localScale.x /parallax;
+        offset.y = position.y / localScale.y /parallax;
 
         mat.mainTextureOffset = offset;
     }
