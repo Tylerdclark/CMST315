@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    public GameObject asteroidPrefab;
-    private const float RangeLimit = 5.0f;
-    private const float ZValue = 10.0f;
+    private const float RangeLimit = 8.0f;
+    private const float ZValue = 13.0f;
+    public GameObject[] asteroidPrefabs;
 
     // Start is called before the first frame update
     void Start()
     {
         InvokeRepeating(nameof(SpawnAsteroid), 5,5);
-        //Invoke(nameof(SpawnAsteroid),5);
     }
 
     // Update is called once per frame
@@ -23,7 +22,8 @@ public class SpawnManager : MonoBehaviour
 
     void SpawnAsteroid()
     {
-        Instantiate(asteroidPrefab, getRandomCoordinates(), transform.rotation);
+        int index = Random.Range(0, asteroidPrefabs.Length);
+        Instantiate(asteroidPrefabs[index], getRandomCoordinates(), transform.rotation);
     }
 
     Vector3 getRandomCoordinates()
