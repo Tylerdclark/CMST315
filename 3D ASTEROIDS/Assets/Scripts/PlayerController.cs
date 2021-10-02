@@ -5,17 +5,15 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private float speed = 1.5f;
-    public GameObject projectilePrefab;
-    private const float VerticalBound = 1.5f;
-    private const float HorizontalBound = 3.0f;
-    
-    
-    
-    
+    private const float Speed = 1.5f;
+    public GameObject projectilePrefab; //TODO: will use this to change laser line to rockets
+    public GameObject reticlePrefab;
+    private const float YBound = 1.25f;
+    private const float XBound = 1.25f;
+    private const float ZBound = 1.25f;
     
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
     }
 
@@ -23,20 +21,17 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         MovePlayer();
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            var transform1 = transform;
-            Instantiate(projectilePrefab, transform1.position+new Vector3(0,0,0.5f), transform1.rotation);
-        }
+        transform.LookAt(reticlePrefab.transform);
+
     }
 
     private void MovePlayer()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
+        var horizontalInput = Input.GetAxis("Horizontal");
+        var verticalInput = Input.GetAxis("Vertical");
 
-        transform.Translate(Vector3.up * verticalInput * speed * Time.deltaTime);
-        transform.Translate(Vector3.right * horizontalInput * speed * Time.deltaTime);
+        transform.Translate(Vector3.up * verticalInput * Speed * Time.deltaTime);
+        transform.Translate(Vector3.right * horizontalInput * Speed * Time.deltaTime);
         
         BoundPlayer();
     }
@@ -44,37 +39,39 @@ public class PlayerController : MonoBehaviour
     private void BoundPlayer()
     {
         var position = transform.position;
-
-        if (transform.position.x > HorizontalBound)
+        if (transform.position.x > XBound)
         {
-            position = new Vector3(HorizontalBound, position.y, position.z);
+            position = new Vector3(XBound, position.y, position.z);
             transform.position = position;
         }
-
-        if (transform.position.x < -HorizontalBound)
+        if (transform.position.x < -XBound)
         {
-            position = new Vector3(-HorizontalBound, position.y, position.z);
+            position = new Vector3(-XBound, position.y, position.z);
             transform.position = position;
         }
-
-        if (transform.position.y > VerticalBound)
+        if (transform.position.y > YBound)
         {
-            position = new Vector3(position.x, VerticalBound, position.z);
+            position = new Vector3(position.x, YBound, position.z);
             transform.position = position;
         }
-
         if (transform.position.y < 0)
         {
             position = new Vector3(position.x, 0, position.z);
+            transform.position = position;
+        }
+        if (transform.position.z > ZBound || transform.position.z < ZBound )
+        {
+            position = new Vector3(position.x, position.y, ZBound);
             transform.position = position;
         }
     }
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Asteroid"))
+        if (other.gameObject.transform.CompareTag("Asteroid"))
         {
-            Debug.Log("Game over!");
+            Debug.Log("Game over!"); //TODO: will change Game over bool here
         }
     }
+
 }

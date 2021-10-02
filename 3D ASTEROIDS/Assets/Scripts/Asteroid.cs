@@ -4,35 +4,50 @@ using UnityEngine;
 
 public class Asteroid : MonoBehaviour
 {
-    private GameObject player;
-    private Rigidbody objectRB;
+    private GameObject _player;
+    private Rigidbody _objectRb;
     public float speed = 5.0f;
-    private const float zLimit = 10.0f;
+    private const float ZLimit = 10.0f;
     private const float TimeLimit = 12.0f;
-    private float timeStart;
+    private const float Tumble = 0.5f;
+    private float _timeStart;
+    public int healthPoints;
+    
+    
+    
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        player = GameObject.FindWithTag("Player");
-        objectRB = GetComponent<Rigidbody>();
-        Vector3 toPlayer = (player.transform.position - transform.position).normalized;
-        objectRB.AddForce(toPlayer * speed);
-        timeStart = Time.time;
+        _player = GameObject.FindWithTag("Player");
+        _objectRb = GetComponent<Rigidbody>();
+        var toPlayer = (_player.transform.position - transform.position).normalized;
+        _objectRb.angularVelocity = Random.insideUnitSphere * Tumble;
+        _objectRb.AddForce(toPlayer * speed);
+        _timeStart = Time.time;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        float timeElapsed = Time.time - timeStart;
+        var timeElapsed = Time.time - _timeStart;
         
-        if (transform.position.z < -zLimit)
+        if (transform.position.z < -ZLimit || timeElapsed > TimeLimit || healthPoints <= 0)
         {
             Destroy(gameObject);
+            var manager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+            manager.Score(5); //TODO: create some scoring that makes sense
         }
 
-        if (timeElapsed > TimeLimit)
+        if (timeElapsed > TimeLimit) //just in case the ship dodges it.
         {
             Destroy(gameObject);
         }
+        
+    }
+
+    public void TakeDamage()
+    {
+        healthPoints -= 1;
+        Debug.Log("Health = " +  healthPoints);
     }
 }

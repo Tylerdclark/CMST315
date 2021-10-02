@@ -5,44 +5,41 @@ using UnityEngine;
 public class AimReticle : MonoBehaviour
 {
     public GameObject player;
-    private LineRenderer laserLine;
-    private AudioSource gunAudio;
-    private WaitForSeconds shotDuration = new WaitForSeconds(0.07f);    // WaitForSeconds object used by our ShotEffect 
+    private LineRenderer _laserLine;
+    private AudioSource _gunAudio;
+    private float _nextFire;
+    private readonly WaitForSeconds _shotDuration = new WaitForSeconds(0.1f);
+    public float fireRate = 0.25f;
+    
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        laserLine = GetComponent<LineRenderer>();
-        //gunAudio = GetComponent<AudioSource>();
+        _laserLine = GetComponent<LineRenderer>();
+        //_gunAudio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
 
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         
+        if (!Physics.Raycast(ray, out var hitData, 1000)) return;
+        transform.position = hitData.point;
+        if (!hitData.transform.CompareTag("Asteroid") || !(Time.time > _nextFire)) return;
+        _nextFire = Time.time + fireRate;
+        // Start our ShotEffect coroutine to turn our laser line on and off
+        StartCoroutine (ShotEffect());
+        // Set the start position for our visual effect for our laser to the position of gunEnd
+        _laserLine.SetPosition (0, player.gameObject.transform.position);
+        // Set the end position for our laser line 
+        _laserLine.SetPosition (1, hitData.point);
+                
+                
+        var asteroid = hitData.transform.GetComponent<Asteroid>();
+        asteroid.TakeDamage();
 
-        
-        RaycastHit hitData;
-        if(Physics.Raycast(ray, out hitData, 1000))
-        {
-            transform.position = hitData.point;
-            if (hitData.transform.CompareTag("Asteroid"))
-            {
-                // Start our ShotEffect coroutine to turn our laser line on and off
-                StartCoroutine (ShotEffect());
-                // Set the start position for our visual effect for our laser to the position of gunEnd
-                laserLine.SetPosition (0, player.gameObject.transform.position);
-                // Set the end position for our laser line 
-                laserLine.SetPosition (1, hitData.point);
-                
-                
-                Destroy(hitData.collider.gameObject);
-                
-            }
-        }
-        
     }
     private IEnumerator ShotEffect()
     {
@@ -50,12 +47,12 @@ public class AimReticle : MonoBehaviour
         //gunAudio.Play ();
 
         // Turn on our line renderer
-        laserLine.enabled = true;
+        _laserLine.enabled = true;
 
         //Wait for .07 seconds
-        yield return shotDuration;
+        yield return _shotDuration;
 
         // Deactivate our line renderer after waiting
-        laserLine.enabled = false;
+        _laserLine.enabled = false;
     }
 }

@@ -8,13 +8,13 @@ public class ScrollingBackground : MonoBehaviour
     public float parallax = 10f;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
 
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         var meshRenderer = GetComponent<MeshRenderer>();
         var mat = meshRenderer.material;
