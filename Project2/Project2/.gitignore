@@ -1,5 +1,3 @@
-
-.DS_Store
 # This .gitignore file should be placed at the root of your Unity project directory
 #
 # Get latest from https://github.com/github/gitignore/blob/master/Unity.gitignore
@@ -71,42 +69,3 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
-Create with Code/Prototype 1/Assets/Editor/
-
-Create with Code/Prototype 1/.idea/
-
-Create with Code/Prototype 2/.idea/
-
-3D ASTEROIDS/.idea/
-
-Create with Code/Prototype 3/.idea/.idea.Prototype 3/.idea/
-
-Create with Code/Prototype 3/Assets/Editor/
-
-Project1/Clark - Project 1 - Reflection.docx
-
-3D ASTEROIDS/Assets/Editor/
-
-Clark - Project 2 - Reflection.docx
-
-Create with Code/Prototype 4/.idea/
-
-Create with Code/Prototype 4/Assets/Editor/
-
-Create with Code/Prototype 5/.idea/
-
-Create with Code/Prototype 5/Assets/Editor/
-
-Create with Code/Prototype 5/Assets/TextMesh Pro/
-
-Project2/Project2/Project2_Win/
-
-Project2/Project2/Mac_project2.app/
-
-3D ASTEROIDS/test1.app/
-
-Project2/Project2/Project2_Win.zip
-
-3D ASTEROIDS/Assets/Course Library/
-
-3D ASTEROIDS/Assets/StarSparrow/
