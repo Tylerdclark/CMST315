@@ -55,7 +55,6 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -128,6 +127,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 100
+  healthPoints: 0
+  explosion: {fileID: 3998749922618090071, guid: cdb8ff6f892394f01ad3baa26193087e, type: 3}
 --- !u!1001 &3287803386147231746
 PrefabInstance:
   m_ObjectHideFlags: 0

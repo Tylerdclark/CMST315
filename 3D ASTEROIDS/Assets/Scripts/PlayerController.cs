@@ -6,8 +6,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private const float Speed = 1.5f;
-    public GameObject projectilePrefab; //TODO: will use this to change laser line to rockets
     public GameObject reticlePrefab;
+    public GameManager gameManager;
     private const float YBound = 1.25f;
     private const float XBound = 1.25f;
     private const float ZBound = 1.25f;
@@ -20,9 +20,9 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        if (gameManager.isGameOver) return;
         MovePlayer();
         transform.LookAt(reticlePrefab.transform);
-
     }
 
     private void MovePlayer()
@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.transform.CompareTag("Asteroid"))
         {
-            Debug.Log("Game over!"); //TODO: will change Game over bool here
+            gameManager.isGameOver = true;
         }
     }
 

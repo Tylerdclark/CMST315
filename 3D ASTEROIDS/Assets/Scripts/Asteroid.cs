@@ -12,8 +12,7 @@ public class Asteroid : MonoBehaviour
     private const float Tumble = 0.5f;
     private float _timeStart;
     public int healthPoints;
-    
-    
+    public GameObject explosion;
     
     // Start is called before the first frame update
     private void Start()
@@ -31,16 +30,17 @@ public class Asteroid : MonoBehaviour
     {
         var timeElapsed = Time.time - _timeStart;
         
-        if (transform.position.z < -ZLimit || timeElapsed > TimeLimit || healthPoints <= 0)
+        if (healthPoints <= 0)
         {
+            Instantiate(explosion, transform.position, Quaternion.identity);
             Destroy(gameObject);
             var manager = GameObject.Find("Game Manager").GetComponent<GameManager>();
-            manager.Score(5); //TODO: create some scoring that makes sense
+            manager.Score(5);
         }
 
-        if (timeElapsed > TimeLimit) //just in case the ship dodges it.
+        if (transform.position.z < -ZLimit ||timeElapsed > TimeLimit) //just in case the ship dodges it.
         {
-            Destroy(gameObject);
+            Destroy(gameObject); //don't give points or make explosion
         }
         
     }
@@ -48,6 +48,5 @@ public class Asteroid : MonoBehaviour
     public void TakeDamage()
     {
         healthPoints -= 1;
-        Debug.Log("Health = " +  healthPoints);
     }
 }

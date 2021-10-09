@@ -43,5 +43,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9f743f53581b4489ab84783d2526913, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  asteroidPrefab: {fileID: 8499612992778107228, guid: e69fb20641ed5406286a2eb9cffa5f66, type: 3}
-  asteroidPrefabs: []
+  asteroidPrefabs:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  scoreText: {fileID: 0}
+  isGameOver: 0
+  menuCanvas: {fileID: 0}
